@@ -83,6 +83,13 @@ Install as a plugin elsewhere:
 /plugin install eonedge-skills@eonedge
 ```
 
+## Contributing
+
+One source, three runtimes — edit skills under `.claude/`, never the symlinked
+copies. Run the gate (`validate.py`, the validator tests, the plugin build-check)
+before opening a PR. Details in [`CONTRIBUTING.md`](CONTRIBUTING.md); community
+expectations in [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md).
+
 ## Security
 
 Found a vulnerability or a committed credential? **Don't open a public issue** —

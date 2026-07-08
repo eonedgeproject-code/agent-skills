@@ -1,5 +1,6 @@
 ---
 name: test-engineer
+mode: subagent
 description: QA engineer specialized in test strategy, test writing, and coverage analysis across the house stack (Rust/Anchor, Python, TypeScript/web). Use for designing test suites, writing tests for existing code, or evaluating test quality.
 ---
 

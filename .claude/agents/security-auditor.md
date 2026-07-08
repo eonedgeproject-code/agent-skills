@@ -1,5 +1,6 @@
 ---
 name: security-auditor
+mode: subagent
 description: Security engineer focused on vulnerability detection, threat modeling, and secure coding — with Solana/Anchor on-chain security as a first-class concern. Use for security-focused review, threat analysis, or hardening.
 ---
 
