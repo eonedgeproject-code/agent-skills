@@ -82,3 +82,13 @@ Install as a plugin elsewhere:
 /plugin marketplace add eonedgeproject-code/agent-skills
 /plugin install eonedge-skills@eonedge
 ```
+
+## Security
+
+Found a vulnerability or a committed credential? **Don't open a public issue** —
+report it privately per [`SECURITY.md`](SECURITY.md).
+
+## License
+
+[MIT](LICENSE). Adapted from [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills)
+(© 2025 Addy Osmani), under the MIT License; adaptations © 2026 eonedge.
