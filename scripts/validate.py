@@ -79,6 +79,7 @@ def main() -> int:
         ROOT / ".claude-plugin" / "marketplace.json",
         ROOT / "hooks" / "hooks.json",
         ROOT / "plugins" / "gemini" / "hooks.json",  # Gemini CLI plugin manifest
+        ROOT / "opencode.json",  # OpenCode project config
     ]
     plugin_manifest = None
     for j in json_files:
@@ -106,6 +107,16 @@ def main() -> int:
             else:
                 ok(f"path:{r}")
 
+    # 4c. OpenCode symlinks must resolve (commands/agents are shared with .claude/*)
+    for link_rel, target_rel in ((".opencode/commands", ".claude/commands"), (".opencode/agents", ".claude/agents")):
+        link = ROOT / link_rel
+        if not link.is_symlink():
+            fail(f"{link_rel}: expected a symlink into {target_rel}")
+        elif not link.resolve().exists():
+            fail(f"{link_rel}: symlink target does not resolve")
+        else:
+            ok(f"symlink:{link_rel}")
+
     # 5. Brand-leak guard across shipped content (skip scripts/ and .github/)
     scan_globs = [
         ".claude/skills/*/SKILL.md",
@@ -117,6 +128,9 @@ def main() -> int:
         "README.md",
         "plugins/gemini/.agents/hooks/*.sh",   # Gemini CLI plugin hook
         "plugins/gemini/hooks.json",           # Gemini CLI plugin manifest
+        "opencode.json",                       # OpenCode project config
+        ".opencode/plugins/*.ts",              # OpenCode plugin
+        ".opencode/README.md",                 # OpenCode integration docs
     ]
     for pattern in scan_globs:
         for f in sorted(ROOT.glob(pattern)):

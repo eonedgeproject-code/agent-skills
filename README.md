@@ -25,6 +25,7 @@ Next 15 / Tailwind v4 · Python**.
 | **Session hook** | `.claude/hooks/session-start.sh` | injects the skill-discovery router each session |
 | **Claude Code plugin** | `.claude-plugin/`, `hooks/` | installable as a Claude Code plugin (`eonedge-skills@eonedge`) |
 | **Gemini CLI plugin** | `plugins/gemini/` | same content for Gemini CLI — `.agents/` symlinked to `.claude/*`, no duplication |
+| **OpenCode plugin** | `.opencode/`, `opencode.json` | same content for OpenCode — skills read natively from `.claude/skills`, commands/agents symlinked, no duplication |
 
 `fullstack-standard` is the always-on core — every other skill is measured against
 its Definition of Done gate. `using-agent-skills` is the meta-skill router that maps
@@ -55,18 +56,19 @@ an intent (feature / bug / review / deploy) onto the right skill sequence.
 
 ## Tool support
 
-One source of content, two agent runtimes:
+One source of content, three agent runtimes:
 
 | Runtime | Root | Discovery |
 |---|---|---|
 | **Claude Code** | `.claude/` | native (`.claude/skills`, `.claude/commands`, `.claude/agents`) |
 | **Gemini CLI** | `plugins/gemini/` | self-contained plugin (`GEMINI_PLUGIN_ROOT=plugins/gemini`); its `.agents/` symlinks skills/commands/agents into `.claude/*`, so both tools always run the same skills — edit once. |
+| **OpenCode** | `.opencode/` + `opencode.json` | skills read **natively** from `.claude/skills` (OpenCode's documented fallback); `.opencode/commands` & `.opencode/agents` symlink into `.claude/*`; `opencode.json` `instructions` makes `fullstack-standard` always-on. See [`.opencode/README.md`](.opencode/README.md). |
 
 ## Setup
 
-Skills, commands, and agents are auto-discovered from `.claude/` (Claude Code) or
-`plugins/gemini/` (Gemini CLI, `GEMINI_PLUGIN_ROOT=plugins/gemini`) — restart the
-session in this workspace to load them.
+Skills, commands, and agents are auto-discovered from `.claude/` (Claude Code),
+`plugins/gemini/` (Gemini CLI, `GEMINI_PLUGIN_ROOT=plugins/gemini`), or `.opencode/`
++ `opencode.json` (OpenCode) — restart the session in this workspace to load them.
 
 The session-start hook needs `jq` for full meta-skill injection:
 
