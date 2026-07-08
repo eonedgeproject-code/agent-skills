@@ -70,11 +70,9 @@ Skills, commands, and agents are auto-discovered from `.claude/` (Claude Code),
 `plugins/gemini/` (Gemini CLI, `GEMINI_PLUGIN_ROOT=plugins/gemini`), or `.opencode/`
 + `opencode.json` (OpenCode) — restart the session in this workspace to load them.
 
-The session-start hook needs `jq` for full meta-skill injection:
-
-```bash
-sudo apt-get install -y jq   # without it, skills still work individually
-```
+The session-start hook uses `python3` (near-universally preinstalled) to emit its
+JSON — no `jq` needed. Without `python3` the hook degrades gracefully and skills
+still work individually.
 
 Install as a plugin elsewhere:
 
