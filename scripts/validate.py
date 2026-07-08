@@ -77,7 +77,6 @@ def main() -> int:
     json_files = [
         ROOT / ".claude-plugin" / "plugin.json",
         ROOT / ".claude-plugin" / "marketplace.json",
-        ROOT / "plugin.json",
         ROOT / "hooks" / "hooks.json",
         ROOT / "plugins" / "gemini" / "hooks.json",  # Gemini CLI plugin manifest
     ]
@@ -115,7 +114,6 @@ def main() -> int:
         ".claude/hooks/*.sh",
         ".claude-plugin/*.json",
         "hooks/*.json",
-        "plugin.json",
         "README.md",
         "plugins/gemini/.agents/hooks/*.sh",   # Gemini CLI plugin hook
         "plugins/gemini/hooks.json",           # Gemini CLI plugin manifest

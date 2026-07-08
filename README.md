@@ -23,7 +23,7 @@ Next 15 / Tailwind v4 · Python**.
 | **Slash commands** | `.claude/commands/` | 8 (`/spec /plan /build /test /review /ship /webperf /code-simplify`) |
 | **Specialist personas** | `.claude/agents/` | 4 (code-reviewer, security-auditor, test-engineer, web-performance-auditor) |
 | **Session hook** | `.claude/hooks/session-start.sh` | injects the skill-discovery router each session |
-| **Claude Code plugin** | `.claude-plugin/`, `plugin.json`, `hooks/` | installable as a Claude Code plugin (`eonedge-skills@eonedge`) |
+| **Claude Code plugin** | `.claude-plugin/`, `hooks/` | installable as a Claude Code plugin (`eonedge-skills@eonedge`) |
 | **Gemini CLI plugin** | `plugins/gemini/` | same content for Gemini CLI — `.agents/` symlinked to `.claude/*`, no duplication |
 
 `fullstack-standard` is the always-on core — every other skill is measured against
