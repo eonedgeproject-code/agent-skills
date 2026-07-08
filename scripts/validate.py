@@ -79,6 +79,8 @@ def main() -> int:
         ROOT / ".claude-plugin" / "marketplace.json",
         ROOT / "plugin.json",
         ROOT / "hooks" / "hooks.json",
+        ROOT / "hooks.json",              # Gemini CLI plugin hook manifest
+        ROOT / ".agents" / "hooks.json",  # Gemini CLI plugin (.agents home)
     ]
     plugin_manifest = None
     for j in json_files:
@@ -116,6 +118,9 @@ def main() -> int:
         "hooks/*.json",
         "plugin.json",
         "README.md",
+        ".agents/hooks/*.sh",   # Gemini CLI plugin hook
+        ".agents/hooks.json",
+        "hooks.json",           # root Gemini plugin manifest
     ]
     for pattern in scan_globs:
         for f in sorted(ROOT.glob(pattern)):
