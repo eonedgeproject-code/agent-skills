@@ -1,8 +1,10 @@
-# Stack-specific standards
+# Backend standards
 
-Detailed rules per layer of the house stack. The Core Philosophy in `SKILL.md`
-(minimal abstraction, type-driven, ship-fast-not-sloppy, repo is truth) governs
-all of these — this file is the concrete application per language.
+Rules for everything that runs off the browser: on-chain programs, servers,
+services, jobs, and SDKs. The Core Philosophy in `SKILL.md` (minimal abstraction,
+type-driven, ship-fast-not-sloppy, repo is truth) governs all of it — this file is
+the concrete application per backend language. Frontend rules live separately in
+`frontend-standards.md`.
 
 ---
 
@@ -31,29 +33,15 @@ all of these — this file is the concrete application per language.
 
 ---
 
-## TypeScript
+## Server TypeScript (APIs, SDKs, jobs)
 
 - `tsconfig` with `"strict": true`. No `any`. No non-null `!` to silence the
   checker — narrow the type properly.
-- Types are the API contract to the frontend and SDK. Export shared types; don't
-  redefine shapes on each side of a boundary.
+- Types are the API contract **exposed to the frontend and other consumers**.
+  Export shared types from one place; the client imports them, never redefines them.
 - Solana: use `@solana/web3.js` typed calls; type instruction args and account
   layouts. Never hardcode secrets/keys — read from env.
 - `pnpm lint` clean; format with prettier. Tests with the project runner, hermetic.
-
----
-
-## Web — Astro 5 / Next 15 / Tailwind v4
-
-- **Static-first.** Marketing sites are static (Astro) where possible; ship the
-  least JS that does the job. Next.js: server components by default, `"use client"`
-  only when you need interactivity/state.
-- **One job per page.** Marketing pages inform, convince, redirect — a single
-  clear CTA (e.g. → the Telegram bot). No dead links, no filler.
-- **Quality bar:** responsive, accessible (semantic HTML, alt text, focus states,
-  contrast), works in **light and dark**, no layout shift, images optimized.
-- Tailwind v4 conventions; keep class soup readable — extract components, not
-  utility spaghetti. No inline styles when a utility exists.
 
 ---
 
@@ -69,7 +57,7 @@ all of these — this file is the concrete application per language.
 
 ---
 
-## Cross-cutting (all stacks)
+## Cross-cutting (all backend code)
 
 - **Errors are typed and handled**, never swallowed. Log through the project
   logger, not stdout.

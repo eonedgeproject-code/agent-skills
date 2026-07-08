@@ -13,9 +13,12 @@ description: >-
 
 # Fullstack Standard
 
-This is the non-negotiable engineering bar for this workspace. It is distilled
-from the maintainer's own repos (`MonstralAI/AGENTS.md`, `eonedge/CONTRIBUTING.md`).
-Match this bar or flag explicitly where you fall short — never silently lower it.
+This is the non-negotiable engineering bar for this workspace. Match this bar or
+flag explicitly where you fall short — never silently lower it. It is split into
+two layers that are kept separate on purpose:
+
+- **Frontend** → `references/frontend-standards.md` (web/UI, browser TypeScript)
+- **Backend** → `references/backend-standards.md` (Rust/Anchor/Solana, Python, server TS)
 
 ## Core philosophy (read first, every time)
 
@@ -58,19 +61,27 @@ If any item can't pass, say so plainly and stop — do not report "done".
 
 ## Stack-specific standards
 
-Detailed rules per layer are in **`references/stack-standards.md`**. Summary:
+Frontend and backend are documented separately — read the one you're touching.
+Full-stack changes read both.
+
+### Backend — `references/backend-standards.md`
 
 - **Rust / Anchor / Solana** — `clippy -D warnings`; no `unwrap()`/`expect()` in
   runtime paths (return typed errors, e.g. `thiserror`); on-chain: PDAs for
   identity/treasury, check every account constraint, never trust client input,
   handle rent/CPI/signer checks explicitly. `anchor test` against a local validator.
-- **TypeScript** — `strict: true`, no `any`, no non-null `!` to dodge the checker.
-  Types are the API contract to the frontend. Prefer `@solana/web3.js` typed calls.
+- **Server TypeScript** — `strict: true`, no `any`, no non-null `!` to dodge the
+  checker. Types are the API contract exposed to the frontend. `@solana/web3.js` typed.
+- **Python** — PEP 8 via `ruff`, line length 100, type hints required on public
+  functions, Google-style docstrings, **no `print()` — use `loguru`**.
+
+### Frontend — `references/frontend-standards.md`
+
 - **Web (Astro 5 / Next 15 / Tailwind v4)** — static-first where possible; server
   components by default; no client JS you don't need. Accessible, responsive,
   works in light+dark. One clear CTA per marketing page.
-- **Python** — PEP 8 via `ruff`, line length 100, type hints required on public
-  functions, Google-style docstrings, **no `print()` — use `loguru`**.
+- **Browser TypeScript** — `strict: true`, no `any`; consume the backend's exported
+  types, never redefine API shapes on the client.
 
 ## Git & commit discipline
 
