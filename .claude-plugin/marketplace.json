@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "eonedge",
+  "description": "eonedge engineering skills — the full software development lifecycle from spec to ship, tuned to the house stack (Rust/Anchor/Solana, TypeScript, Astro/Next, Python).",
+  "owner": {
+    "name": "eonedge",
+    "url": "https://github.com/eonedgeproject-code"
+  },
+  "plugins": [
+    {
+      "name": "eonedge-skills",
+      "source": ".",
+      "description": "24 lifecycle skills + 8 slash commands + 4 specialist personas, enforcing the fullstack-standard engineering bar across spec, plan, build, verify, review, and ship.",
+      "homepage": "https://github.com/eonedgeproject-code",
+      "license": "MIT",
+      "keywords": ["skills", "agents", "solana", "anchor", "rust", "typescript", "spec", "tdd", "review", "ship"]
+    }
+  ]
+}

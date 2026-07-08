@@ -1,0 +1,19 @@
+{
+  "name": "eonedge-skills",
+  "version": "1.0.0",
+  "description": "eonedge's engineering skills for AI coding agents — the full spec→plan→build→verify→review→ship lifecycle, tuned to the house stack (Rust/Anchor/Solana, TypeScript, Astro/Next, Python).",
+  "author": {
+    "name": "eonedge",
+    "email": "eonedgeproject@gmail.com"
+  },
+  "homepage": "https://github.com/eonedgeproject-code",
+  "license": "MIT",
+  "commands": "./.claude/commands",
+  "skills": "./.claude/skills",
+  "agents": [
+    "./.claude/agents/code-reviewer.md",
+    "./.claude/agents/security-auditor.md",
+    "./.claude/agents/test-engineer.md",
+    "./.claude/agents/web-performance-auditor.md"
+  ]
+}

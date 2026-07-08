@@ -1,2 +1,69 @@
 # Project July
-Project ideas and development workspace.
+
+Development workspace + **eonedge agent-skills** — a full software-development
+lifecycle framework for AI coding agents, tuned to the house stack.
+
+Ported and adapted from [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills)
+(MIT) to the eonedge stack: **Rust / Anchor / Solana · TypeScript · Astro 5 /
+Next 15 / Tailwind v4 · Python**.
+
+```
+  DEFINE          PLAN           BUILD          VERIFY         REVIEW          SHIP
+  /spec           /plan          /build         /test          /review         /ship
+```
+
+## What's here
+
+| Layer | Path | Count |
+|---|---|---|
+| **Core standard** | `.claude/skills/fullstack-standard/` | the always-on engineering bar (+ frontend/backend/DoD refs) |
+| **Lifecycle skills** | `.claude/skills/` | 24 workflow skills, spec → ship |
+| **Slash commands** | `.claude/commands/` | 8 (`/spec /plan /build /test /review /ship /webperf /code-simplify`) |
+| **Specialist personas** | `.claude/agents/` | 4 (code-reviewer, security-auditor, test-engineer, web-performance-auditor) |
+| **Session hook** | `.claude/hooks/session-start.sh` | injects the skill-discovery router each session |
+| **Plugin packaging** | `.claude-plugin/`, `plugin.json`, `hooks/` | installable as a Claude Code plugin |
+
+`fullstack-standard` is the always-on core — every other skill is measured against
+its Definition of Done gate. `using-agent-skills` is the meta-skill router that maps
+an intent (feature / bug / review / deploy) onto the right skill sequence.
+
+## Commands
+
+| Doing | Command | Skill |
+|---|---|---|
+| Define what to build | `/spec` | spec-driven-development |
+| Plan how to build it | `/plan` | planning-and-task-breakdown |
+| Build incrementally | `/build` (`/build auto`) | incremental-implementation + test-driven-development |
+| Prove it works | `/test` | test-driven-development |
+| Review before merge | `/review` | code-review-and-quality (five-axis) |
+| Simplify the code | `/code-simplify` | code-simplification |
+| Audit web perf | `/webperf` | web-performance-auditor persona |
+| Ship to production | `/ship` | parallel fan-out → go/no-go |
+
+## Skills by phase
+
+- **Define** — interview-me, idea-refine, spec-driven-development
+- **Plan** — planning-and-task-breakdown
+- **Build** — incremental-implementation, test-driven-development, context-engineering, source-driven-development, doubt-driven-development, frontend-ui-engineering, api-and-interface-design
+- **Verify** — browser-testing-with-devtools, debugging-and-error-recovery
+- **Review** — code-review-and-quality, code-simplification, security-and-hardening, performance-optimization
+- **Ship** — git-workflow-and-versioning, ci-cd-and-automation, deprecation-and-migration, documentation-and-adrs, observability-and-instrumentation, shipping-and-launch
+- **Meta** — using-agent-skills
+
+## Setup
+
+Skills, commands, and agents are auto-discovered from `.claude/` — restart the
+Claude Code session in this workspace to load them.
+
+The session-start hook needs `jq` for full meta-skill injection:
+
+```bash
+sudo apt-get install -y jq   # without it, skills still work individually
+```
+
+Install as a plugin elsewhere:
+
+```
+/plugin marketplace add eonedgeproject-code/agent-skills
+/plugin install eonedge-skills@eonedge
+```
