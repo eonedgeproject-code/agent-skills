@@ -1,5 +1,7 @@
 # Project July
 
+[![CI](https://github.com/eonedgeproject-code/agent-skills/actions/workflows/ci.yml/badge.svg)](https://github.com/eonedgeproject-code/agent-skills/actions/workflows/ci.yml)
+
 Development workspace + **eonedge agent-skills** — a full software-development
 lifecycle framework for AI coding agents, tuned to the house stack.
 
