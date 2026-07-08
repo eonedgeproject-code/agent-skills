@@ -1,0 +1,52 @@
+# --- Secrets & env ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.keypair.json
+id.json
+wallet.json
+secrets/
+
+# --- Node / TypeScript ---
+node_modules/
+dist/
+build/
+.next/
+.astro/
+.turbo/
+*.tsbuildinfo
+.pnpm-store/
+npm-debug.log*
+pnpm-debug.log*
+yarn-error.log*
+
+# --- Rust / Anchor / Solana ---
+target/
+Cargo.lock
+.anchor/
+test-ledger/
+**/*.rs.bk
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+*.egg-info/
+
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/
+
+# --- Claude Code (keep skills, ignore local state) ---
+.claude/settings.local.json
+.claude/*.local.json
