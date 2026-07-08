@@ -28,6 +28,6 @@ jobs:
       - name: Validate JSON manifests with jq
         run: |
           for f in .claude-plugin/plugin.json .claude-plugin/marketplace.json \
-                   hooks/hooks.json plugins/gemini/hooks.json; do
+                   hooks/hooks.json plugins/gemini/hooks.json opencode.json; do
             jq empty "$f" && echo "ok: $f"
           done
