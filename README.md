@@ -19,7 +19,7 @@ Next 15 / Tailwind v4 · Python**.
 | Layer | Path | Count |
 |---|---|---|
 | **Core standard** | `.claude/skills/fullstack-standard/` | the always-on engineering bar (+ frontend/backend/DoD refs) |
-| **Lifecycle skills** | `.claude/skills/` | 24 workflow skills, spec → ship |
+| **Lifecycle skills** | `.claude/skills/` | 26 workflow skills, spec → ship |
 | **Slash commands** | `.claude/commands/` | 8 (`/spec /plan /build /test /review /ship /webperf /code-simplify`) |
 | **Specialist personas** | `.claude/agents/` | 4 (code-reviewer, security-auditor, test-engineer, web-performance-auditor) |
 | **Session hook** | `.claude/hooks/session-start.sh` | injects the skill-discovery router each session |
@@ -50,8 +50,8 @@ an intent (feature / bug / review / deploy) onto the right skill sequence.
 - **Plan** — planning-and-task-breakdown
 - **Build** — incremental-implementation, test-driven-development, context-engineering, source-driven-development, doubt-driven-development, frontend-ui-engineering, api-and-interface-design
 - **Verify** — browser-testing-with-devtools, debugging-and-error-recovery
-- **Review** — code-review-and-quality, code-simplification, security-and-hardening, performance-optimization
-- **Ship** — git-workflow-and-versioning, ci-cd-and-automation, deprecation-and-migration, documentation-and-adrs, observability-and-instrumentation, shipping-and-launch
+- **Review** — code-review-and-quality, code-simplification, security-and-hardening, dependency-and-supply-chain, performance-optimization
+- **Ship** — git-workflow-and-versioning, ci-cd-and-automation, deprecation-and-migration, database-schema-migrations, documentation-and-adrs, observability-and-instrumentation, shipping-and-launch
 - **Meta** — using-agent-skills
 
 ## Tool support
