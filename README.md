@@ -23,7 +23,8 @@ Next 15 / Tailwind v4 · Python**.
 | **Slash commands** | `.claude/commands/` | 8 (`/spec /plan /build /test /review /ship /webperf /code-simplify`) |
 | **Specialist personas** | `.claude/agents/` | 4 (code-reviewer, security-auditor, test-engineer, web-performance-auditor) |
 | **Session hook** | `.claude/hooks/session-start.sh` | injects the skill-discovery router each session |
-| **Plugin packaging** | `.claude-plugin/`, `plugin.json`, `hooks/` | installable as a Claude Code plugin |
+| **Claude Code plugin** | `.claude-plugin/`, `plugin.json`, `hooks/` | installable as a Claude Code plugin (`eonedge-skills@eonedge`) |
+| **Gemini CLI plugin** | `.agents/`, `hooks.json`, `agents`/`commands`/`skills` symlinks | same content for Gemini CLI — symlinked to `.claude/*`, no duplication |
 
 `fullstack-standard` is the always-on core — every other skill is measured against
 its Definition of Done gate. `using-agent-skills` is the meta-skill router that maps
@@ -52,10 +53,19 @@ an intent (feature / bug / review / deploy) onto the right skill sequence.
 - **Ship** — git-workflow-and-versioning, ci-cd-and-automation, deprecation-and-migration, documentation-and-adrs, observability-and-instrumentation, shipping-and-launch
 - **Meta** — using-agent-skills
 
+## Tool support
+
+One source of content, two agent runtimes:
+
+| Runtime | Root | Discovery |
+|---|---|---|
+| **Claude Code** | `.claude/` | native (`.claude/skills`, `.claude/commands`, `.claude/agents`) |
+| **Gemini CLI** | `.agents/` | `.agents/` + root `hooks.json` (`GEMINI_*` vars); skills/commands/agents are symlinks into `.claude/*`, so both tools always run the same skills — edit once. |
+
 ## Setup
 
-Skills, commands, and agents are auto-discovered from `.claude/` — restart the
-Claude Code session in this workspace to load them.
+Skills, commands, and agents are auto-discovered from `.claude/` (Claude Code) or
+`.agents/` (Gemini CLI) — restart the session in this workspace to load them.
 
 The session-start hook needs `jq` for full meta-skill injection:
 
