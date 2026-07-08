@@ -23,11 +23,11 @@ jobs:
         run: python3 scripts/validate.py
 
       - name: Shellcheck hooks (Claude Code + Gemini CLI)
-        run: shellcheck .claude/hooks/*.sh .agents/hooks/*.sh
+        run: shellcheck .claude/hooks/*.sh plugins/gemini/.agents/hooks/*.sh
 
       - name: Validate JSON manifests with jq
         run: |
           for f in .claude-plugin/plugin.json .claude-plugin/marketplace.json plugin.json \
-                   hooks/hooks.json hooks.json .agents/hooks.json; do
+                   hooks/hooks.json plugins/gemini/hooks.json; do
             jq empty "$f" && echo "ok: $f"
           done

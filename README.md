@@ -24,7 +24,7 @@ Next 15 / Tailwind v4 · Python**.
 | **Specialist personas** | `.claude/agents/` | 4 (code-reviewer, security-auditor, test-engineer, web-performance-auditor) |
 | **Session hook** | `.claude/hooks/session-start.sh` | injects the skill-discovery router each session |
 | **Claude Code plugin** | `.claude-plugin/`, `plugin.json`, `hooks/` | installable as a Claude Code plugin (`eonedge-skills@eonedge`) |
-| **Gemini CLI plugin** | `.agents/`, `hooks.json`, `agents`/`commands`/`skills` symlinks | same content for Gemini CLI — symlinked to `.claude/*`, no duplication |
+| **Gemini CLI plugin** | `plugins/gemini/` | same content for Gemini CLI — `.agents/` symlinked to `.claude/*`, no duplication |
 
 `fullstack-standard` is the always-on core — every other skill is measured against
 its Definition of Done gate. `using-agent-skills` is the meta-skill router that maps
@@ -60,12 +60,13 @@ One source of content, two agent runtimes:
 | Runtime | Root | Discovery |
 |---|---|---|
 | **Claude Code** | `.claude/` | native (`.claude/skills`, `.claude/commands`, `.claude/agents`) |
-| **Gemini CLI** | `.agents/` | `.agents/` + root `hooks.json` (`GEMINI_*` vars); skills/commands/agents are symlinks into `.claude/*`, so both tools always run the same skills — edit once. |
+| **Gemini CLI** | `plugins/gemini/` | self-contained plugin (`GEMINI_PLUGIN_ROOT=plugins/gemini`); its `.agents/` symlinks skills/commands/agents into `.claude/*`, so both tools always run the same skills — edit once. |
 
 ## Setup
 
 Skills, commands, and agents are auto-discovered from `.claude/` (Claude Code) or
-`.agents/` (Gemini CLI) — restart the session in this workspace to load them.
+`plugins/gemini/` (Gemini CLI, `GEMINI_PLUGIN_ROOT=plugins/gemini`) — restart the
+session in this workspace to load them.
 
 The session-start hook needs `jq` for full meta-skill injection:
 

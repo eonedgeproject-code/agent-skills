@@ -1,0 +1,10 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": "SCRIPT=\"${GEMINI_PLUGIN_ROOT}/.agents/hooks/session-start-gemini.sh\"; [ -f \"$SCRIPT\" ] || SCRIPT=\"${GEMINI_PROJECT_DIR}/plugins/gemini/.agents/hooks/session-start-gemini.sh\"; [ -f \"$SCRIPT\" ] && bash \"$SCRIPT\" || true"
+      }
+    ]
+  }
+}
