@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate skills, commands, agents & manifests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate structure
+        run: python3 scripts/validate.py
+
+      - name: Shellcheck hooks
+        run: shellcheck .claude/hooks/*.sh
+
+      - name: Validate JSON manifests with jq
+        run: |
+          for f in .claude-plugin/plugin.json .claude-plugin/marketplace.json plugin.json hooks/hooks.json; do
+            jq empty "$f" && echo "ok: $f"
+          done
