@@ -22,6 +22,9 @@ jobs:
       - name: Validate structure
         run: python3 scripts/validate.py
 
+      - name: Unit-test the validator
+        run: python3 -m unittest discover -s scripts -p 'test_*.py' -v
+
       - name: Shellcheck hooks (Claude Code + Gemini CLI)
         run: shellcheck .claude/hooks/*.sh plugins/gemini/.agents/hooks/*.sh
 
@@ -31,3 +34,9 @@ jobs:
                    hooks/hooks.json plugins/gemini/hooks.json opencode.json; do
             jq empty "$f" && echo "ok: $f"
           done
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Build-check the OpenCode plugin
+        run: bun build .opencode/plugins/eonedge-skills.ts --target=node > /dev/null
