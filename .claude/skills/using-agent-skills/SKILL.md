@@ -62,11 +62,13 @@ Task arrives  ──►  fullstack-standard is already in force (always-on)
     ├─ REVIEWING code (yours or a PR)? ───────► code-review-and-quality
     │       ├─ Over-complex? ─────────────────► code-simplification
     │       ├─ Security surface? ─────────────► security-and-hardening
+    │       ├─ Dependency / lockfile / CVE? ──► dependency-and-supply-chain
     │       └─ Slow / hot path? ──────────────► performance-optimization
     │
     ├─ Committing / branching? ───────────────► git-workflow-and-versioning
     ├─ CI/CD pipeline work? ──────────────────► ci-cd-and-automation
     ├─ Retiring / migrating old code or accounts? ─► deprecation-and-migration
+    ├─ Changing a deployed DB schema / backfill? ─► database-schema-migrations
     ├─ Recording a decision / ADR / docs? ────► documentation-and-adrs
     ├─ Adding logs / metrics / alerts? ───────► observability-and-instrumentation
     │
@@ -148,7 +150,7 @@ whichever skill is active, is the **Definition of Done**
    `spec-driven-development`.
 5. **`fullstack-standard` is always on.** It is never skipped and never "finished".
 
-## The 24 skills, grouped by phase
+## The 26 skills, grouped by phase
 
 `fullstack-standard` is the always-on core beneath all six phases.
 
@@ -187,6 +189,7 @@ whichever skill is active, is the **Definition of Done**
 | code-review-and-quality | Multi-axis review against the Definition of Done. |
 | code-simplification | Cut unnecessary complexity while preserving behavior. |
 | security-and-hardening | Hostile-input assumptions, account-constraint checks, least privilege, secret hygiene. |
+| dependency-and-supply-chain | Third-party deps as attack surface — audit, pin, license-check, lockfile hygiene. |
 | performance-optimization | Measure first; optimize only what the data says matters. |
 
 **Ship**
@@ -195,6 +198,7 @@ whichever skill is active, is the **Definition of Done**
 | git-workflow-and-versioning | Atomic conventional commits, clean history. |
 | ci-cd-and-automation | Automated quality gates on every change. |
 | deprecation-and-migration | Retire old systems / account layouts and migrate safely. |
+| database-schema-migrations | Zero-downtime off-chain schema changes: forward+rollback, expand-contract, batched backfills. |
 | documentation-and-adrs | Record the *why*; ADRs for irreversible on-chain decisions. |
 | observability-and-instrumentation | Structured logs (tracing/loguru), RED metrics, symptom alerts. |
 | shipping-and-launch | Pre-launch gate, localnet→devnet→mainnet rollout, monitoring, rollback. |
@@ -216,9 +220,11 @@ whichever skill is active, is the **Definition of Done**
    + doubt-driven-development    → cross-examine non-trivial on-chain decisions in-flight
 7  code-review-and-quality       → review before merge
    + code-simplification / security-and-hardening / performance-optimization as warranted
+   + dependency-and-supply-chain → audit/pin deps touched; fail on high-severity advisories
 8  git-workflow-and-versioning   → clean commit history
 9  documentation-and-adrs        → record the decisions
 10 deprecation-and-migration     → retire old code/accounts when needed
+   + database-schema-migrations  → evolve off-chain DB schema safely (zero-downtime)
 11 shipping-and-launch           → deploy safely (DoD gate → devnet → mainnet)
 ```
 
