@@ -53,6 +53,33 @@ def check_frontmatter(path: Path, *, need_name: bool, expected_name: str | None)
         ok(str(rel))
 
 
+REF_CITE = re.compile(r"references/([A-Za-z0-9._-]+\.md)")
+MD_LINK = re.compile(r"\]\(([^)]+)\)")
+
+
+def check_skill_references(skill_files: list[Path], ref_dir: Path) -> None:
+    """Every `references/<file>.md` a skill cites must exist — either in the
+    skill's own references/ or in the canonical fullstack-standard/references/."""
+    for f in skill_files:
+        for name in sorted(set(REF_CITE.findall(f.read_text(encoding="utf-8")))):
+            if (f.parent / "references" / name).exists() or (ref_dir / name).exists():
+                ok(f"ref:{name}")
+            else:
+                fail(f"{f.relative_to(ROOT)}: cites references/{name} — missing from this skill and fullstack-standard/references/")
+
+
+def check_local_links(md_path: Path) -> None:
+    """Relative markdown links in a doc must resolve to a real file."""
+    for target in MD_LINK.findall(md_path.read_text(encoding="utf-8")):
+        t = target.split("#", 1)[0].strip()
+        if not t or t.startswith(("http://", "https://", "mailto:")):
+            continue
+        if (ROOT / t).exists():
+            ok(f"link:{t}")
+        else:
+            fail(f"{md_path.relative_to(ROOT)}: local link does not resolve -> {t}")
+
+
 def main() -> int:
     # 1. Skills
     skills_dir = ROOT / ".claude" / "skills"
@@ -116,6 +143,13 @@ def main() -> int:
             fail(f"{link_rel}: symlink target does not resolve")
         else:
             ok(f"symlink:{link_rel}")
+
+    # 4d. Cross-reference & link integrity
+    check_skill_references(skill_files, skills_dir / "fullstack-standard" / "references")
+    for doc in ("README.md", "CONTRIBUTING.md", ".opencode/README.md"):
+        p = ROOT / doc
+        if p.exists():
+            check_local_links(p)
 
     # 5. Brand-leak guard across shipped content (skip scripts/ and .github/)
     scan_globs = [

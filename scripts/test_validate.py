@@ -88,6 +88,60 @@ class FrontmatterFileTests(unittest.TestCase):
         self.assertTrue(any("frontmatter" in e for e in validate.errors))
 
 
+class ReferenceAndLinkTests(unittest.TestCase):
+    def setUp(self) -> None:
+        validate.errors.clear()
+        self._tmp = tempfile.TemporaryDirectory()
+        self.tmp = Path(self._tmp.name)
+        validate.ROOT = self.tmp
+
+    def tearDown(self) -> None:
+        validate.ROOT = ORIG_ROOT
+        self._tmp.cleanup()
+
+    def _skill(self, name: str, body: str) -> Path:
+        d = self.tmp / name
+        d.mkdir(parents=True, exist_ok=True)
+        f = d / "SKILL.md"
+        f.write_text(body, encoding="utf-8")
+        return f
+
+    def test_reference_resolved_via_canonical_dir(self) -> None:
+        ref_dir = self.tmp / "fullstack-standard" / "references"
+        ref_dir.mkdir(parents=True)
+        (ref_dir / "backend-standards.md").write_text("x", encoding="utf-8")
+        f = self._skill("a", "defer to `references/backend-standards.md` for detail")
+        validate.check_skill_references([f], ref_dir)
+        self.assertEqual(validate.errors, [])
+
+    def test_missing_reference_is_caught(self) -> None:
+        ref_dir = self.tmp / "fullstack-standard" / "references"
+        ref_dir.mkdir(parents=True)
+        f = self._skill("b", "see `references/does-not-exist.md`")
+        validate.check_skill_references([f], ref_dir)
+        self.assertTrue(any("does-not-exist.md" in e for e in validate.errors))
+
+    def test_local_reference_dir_resolves(self) -> None:
+        f = self._skill("c", "see `references/local.md`")
+        (f.parent / "references").mkdir()
+        (f.parent / "references" / "local.md").write_text("x", encoding="utf-8")
+        validate.check_skill_references([f], self.tmp / "nonexistent")
+        self.assertEqual(validate.errors, [])
+
+    def test_resolving_local_link_ok(self) -> None:
+        (self.tmp / "LICENSE").write_text("MIT", encoding="utf-8")
+        doc = self.tmp / "README.md"
+        doc.write_text("see [the license](LICENSE) and [web](https://example.com)", encoding="utf-8")
+        validate.check_local_links(doc)
+        self.assertEqual(validate.errors, [])
+
+    def test_broken_local_link_is_caught(self) -> None:
+        doc = self.tmp / "README.md"
+        doc.write_text("see [gone](MISSING.md)", encoding="utf-8")
+        validate.check_local_links(doc)
+        self.assertTrue(any("MISSING.md" in e for e in validate.errors))
+
+
 class IntegrationTest(unittest.TestCase):
     def test_main_passes_on_the_real_repo(self) -> None:
         validate.errors.clear()
