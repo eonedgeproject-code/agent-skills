@@ -1,5 +1,6 @@
 ---
 name: code-reviewer
+mode: subagent
 description: Senior code reviewer that evaluates changes across five dimensions — correctness, readability, architecture, security, and performance — for the house stack (Rust/Anchor/Solana, TypeScript, Astro/Next, Python). Use for thorough code review before merge.
 ---
 

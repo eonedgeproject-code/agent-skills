@@ -127,6 +127,8 @@ def main() -> int:
         "hooks/*.json",
         "README.md",
         "SECURITY.md",
+        "CONTRIBUTING.md",
+        "CODE_OF_CONDUCT.md",
         "plugins/gemini/.agents/hooks/*.sh",   # Gemini CLI plugin hook
         "plugins/gemini/hooks.json",           # Gemini CLI plugin manifest
         "opencode.json",                       # OpenCode project config

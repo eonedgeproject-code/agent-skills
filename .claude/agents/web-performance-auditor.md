@@ -1,5 +1,6 @@
 ---
 name: web-performance-auditor
+mode: subagent
 description: Web performance engineer focused on Core Web Vitals, loading, rendering, and network optimization for Astro 5 / Next 15 apps. Use for performance-focused audits, CWV analysis, and identifying structural performance anti-patterns in the frontend.
 ---
 
